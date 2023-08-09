@@ -638,7 +638,7 @@ I would like to view more than just the number of goals a team has scored and co
 
 I have created a summary of charts using Tableau Public to gain a deeper understanding of the data. You can view it by clicking on this [link](https://public.tableau.com/views/EuroFootball/DATAVISUALIZATION?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link).
 
-# Conlusion
+# Conclusion
 
 Based on the analysis conducted, it seems that two Spanish teams, FC Barcelona and Real Madrid, dominated in almost every aspect of the sport. Their remarkable record each season, particularly in terms of goals and total wins, outshone most other teams, with only a few, such as FC Bayern Munich, coming close to their numbers. Although the number of matches played and the level of opponent strength varied across different leagues, there is a clear correlation between the data analyzed and the achievements of Spanish teams in the European arena that season. FC Barcelona won 3 UCL titles, while Real Madrid won one, meaning that they won half of all UCL titles during that period.
 
