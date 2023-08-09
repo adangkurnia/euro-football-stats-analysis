@@ -17,7 +17,7 @@ I got the dataset from Kaggle, you can download it on this [link](https://www.ka
 
 # Data Understanding
 
-There are 7 tables inside the database. Those tables are Match, Country, League, Team, Team Attributes, Player, Player Attributes. The total rows and columns of each table can be seen in this picture:
+There are 7 tables inside the database. Those tables are **Match, Country, League, Team, Team Attributes, Player, Player Attributes**. The total rows and columns of each table can be seen in this picture:
 
 <img width="400" alt="Untitled" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/600c1fb4-6193-4244-b986-f95494a044b2">
 
@@ -28,7 +28,7 @@ All tables have a relationship so they can be joined by each other. The ERD look
 
 # Constraints
 
-- The tables that will be used for this project are Match, Country, League, And Team.
+- The tables that will be used for this project are **Match, Country, League, And Team**.
 - The analysis will be done only for teams from the top 5 leagues in Europe which are **England, Spain, France, Germany, and Italy**.
 - The analysis will be done only for teams that **never got relegated** for the period of season data (2008-2016).
 - The output of the query will only be shown for the top 5-10 data of the case.
@@ -378,7 +378,7 @@ After running the query, we now have the total number of goals scored and conced
     
     <img width="960" alt="Untitled (10)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/8b0c7aaa-9064-4a30-9132-09cc1f346d65">
 
-    From the chart we can see that, the **top 2 teams** have **up and down performances** during each season but they still can keep the performance at a high level. that case also applied to **FC Bayer Munich** and **Manchester City** which can still consistently score goals around **70 to 90**. Meanwhile, Chelsea only had peak performance in terms of scoring goals in the **2009/2010 season** which scored **103 goals**, after that they just dropped the number of goals **below 75 goals** and keep dropping for the **2015/2016 season**. **The lowest number of goals** scored by the top 5 teams is **Manchester City 2008/2009 ** with** 58 goals **only.
+    From the chart we can see that, the **top 2 teams** have **up and down performances** during each season but they still can keep the performance at a high level. that case also applied to **FC Bayer Munich** and **Manchester City** which can still consistently score goals around **70 to 90**. Meanwhile, Chelsea only had peak performance in terms of scoring goals in the **2009/2010 season** which scored **103 goals**, after that they just dropped the number of goals **below 75 goals** and keep dropping for the **2015/2016 season**. **The lowest number of goals** scored by the top 5 teams is **Manchester City 2008/2009** with **58 goals** only.
 
 - Average goals produced by each team
     
@@ -438,7 +438,7 @@ After running the query, we now have the total number of goals scored and conced
   <img width="960" alt="Untitled (16)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/da47a6ed-40ad-4fe9-a444-74035523b071">
   <img width="960" alt="Untitled (17)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/8cd39fc7-f50a-4192-86d7-7f9770c24ac5">
 
-  The most away goals scored was done by **Real Madrid with 53 goals in the season 2014/2015**. They also ever scored almost the same as the first one in the **season 2011/2012 with 51 goals**. The only team that can reach more than 50 away goals in a single season was **FC Barcelona** with **52 goals** in the season** 2012/2013**.
+  The most away goals scored was done by **Real Madrid with 53 goals in the season 2014/2015**. They also ever scored almost the same as the first one in the **season 2011/2012 with 51 goals**. The only team that can reach more than 50 away goals in a single season was **FC Barcelona** with **52 goals** in the season **2012/2013**.
 
 - Goal distributions (%) from the top 10 teams by total goals
     
@@ -504,11 +504,147 @@ After running the query, we now have the total number of goals scored and conced
 
   <img width="960" alt="Untitled (24)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/800b4940-f2b3-432d-a925-32d0a63f0670">
 
-  From the chart, we can see both **FC Barcelona and Real Madrid** have ever booked the highest goal difference with an **89** gap. **Real Madrid ** accomplished it first In the **2011/2012** season, while **FC Barcelona** followed suit three years later.
+  From the chart, we can see both **FC Barcelona and Real Madrid** have ever booked the highest goal difference with an **89** gap. **Real Madrid** accomplished it first In the **2011/2012** season, while **FC Barcelona** followed suit three years later.
 
 **Summary team performances by total wins and losses**
 
 I would like to view more than just the number of goals a team has scored and conceded. It would be helpful to also see their total number of wins and losses, their average number of wins, and their win rate.
+
+- Create a view of team performances by total wins and lost
+    
+    First of all, I want to join some tables like I did before. In this part, I also combined the join tables by using UNION ALL function as we know that I must find the total wins and losses of each team when competing at home and away. to do that, I used this query:
+  ```SQL
+  CREATE VIEW TEAM_WIN_LOSE
+  AS 
+  WITH CTE AS
+  (SELECT 
+  M.SEASON,
+  T.TEAM_LONG_NAME AS TEAM,
+  C."NAME" AS COUNTRY,
+  L."NAME" AS LEAGUE,
+  CASE WHEN HOME_TEAM_GOAL > AWAY_TEAM_GOAL 
+  THEN 'WIN' ELSE 'LOSE' END AS RESULT
+  FROM "MATCH" M 
+  JOIN TEAM T 
+  ON M.HOME_TEAM_API_ID = T.TEAM_API_ID
+  JOIN COUNTRY C 
+  ON M.COUNTRY_ID = C.ID 
+  JOIN LEAGUE L 
+  ON M.LEAGUE_ID = L.ID 
+  UNION ALL
+  SELECT 
+  M.SEASON,
+  T.TEAM_LONG_NAME AS TEAM, 
+  C."NAME" AS COUNTRY,
+  L."NAME" AS LEAGUE,
+  CASE WHEN  AWAY_TEAM_GOAL > HOME_TEAM_GOAL
+  THEN 'WIN' ELSE 'LOSE' END AS RESULT
+  FROM "MATCH" M 
+  JOIN TEAM T 
+  ON M.AWAY_TEAM_API_ID  = T.TEAM_API_ID
+  JOIN COUNTRY C 
+  ON M.COUNTRY_ID = C.ID 
+  JOIN LEAGUE L 
+  ON M.LEAGUE_ID = L.ID)
+  
+  SELECT
+  SEASON,
+  TEAM,
+  COUNTRY,
+  LEAGUE,
+  COUNT(*) AS TOTAL_MATCH,
+  SUM(CASE WHEN RESULT = 'WIN' THEN 1 ELSE 0 END) AS TOTAL_WIN,
+  SUM(CASE WHEN RESULT = 'LOSE' THEN 1 ELSE 0 END) AS TOTAL_LOSE
+  FROM CTE
+  WHERE TEAM IN (SELECT TEAM FROM NOT_RELEGATED_TEAMS NRT)
+  GROUP BY SEASON, TEAM, COUNTRY, LEAGUE
+  ORDER BY SEASON, TEAM;
+  
+  SELECT * FROM TEAM_WIN_LOSE ;
+  ```
+  <img width="550" alt="Untitled (25)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/defc0e42-4ee1-4699-8644-e8a4e736e3da">
+
+- The team with the most wins in all season
+    
+    After creating the view, I then want to see the team with the most wins for the entire season. To do that, I used this query:
+  ```SQL
+  SELECT
+  TEAM,
+  COUNTRY,
+  LEAGUE,
+  SUM(TOTAL_WIN) AS TOTAL_WIN
+  FROM TEAM_WIN_LOSE
+  GROUP BY TEAM, COUNTRY, LEAGUE
+  ORDER BY TOTAL_WIN DESC;
+  ```
+  <img width="400" alt="Untitled (26)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/42bc90b8-bbdb-458e-a4bd-ec014a06fd23">
+
+  From the result, we can see that **FC Barcelona** ranks number 1 in the most wins in the entire season with **234 wins**. The second also comes from the same country which is **Real Madrid** with **228 wins**. The rest of the teams were not even reaching 200 wins with **FC Bayern Munich** from Germany being the closest one with **193 wins**.
+
+- Team with the fewest losses in all seasons
+    
+    The next part will be to see the team with the least defeats for the entire season. The query will be like this:
+  ```SQL
+  SELECT
+  TEAM,
+  COUNTRY,
+  LEAGUE,
+  SUM(TOTAL_LOSE) AS TOTAL_LOSE
+  FROM TEAM_WIN_LOSE
+  GROUP BY TEAM, COUNTRY, LEAGUE
+  ORDER BY TOTAL_LOSE;
+  ```
+  <img width="400" alt="Untitled (27)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/c6f25a12-42e2-4127-bc5d-aad474c61551">
+
+  From the result, we can see that the teams in the top five rankings for this are also the same teams that are in the teams with the most wins just discussed. They are **FC Barcelona** with only **70 defeats**, **Real Madrid** with **76 defeats**, and **FC Bayern Munich** with **79 defeats**. They are only three teams that got lost less than 100 times, other than team, all the teams had more than 110 times lost.
+
+- The winning percentage of each team
+    
+    to see the winning percentage of each team, I used this query:
+  ```SQL
+  SELECT TEAM, 
+  ROUND(SUM(TOTAL_WIN)*100.0/SUM(TOTAL_MATCH),2) AS WINRATE
+  FROM TEAM_WIN_LOSE TWL
+  GROUP BY TEAM
+  ORDER BY WINRATE DESC;
+  ```
+  <img width="200" alt="Untitled (28)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/da044b3e-de43-49f7-b893-9d69f6c1ef83">
+
+  From the query, as we have known the list of the team with the most wins. The **top 3 teams** have a winning percentage **above 70%**. meanwhile, **the rest** of them only have a win rate of **less than 63%**.
+
+- Average win by each team per season
+    
+    to see the average win done by every team in a single season, I used this query:
+  ```SQL
+  SELECT TEAM, 
+  ROUND(AVG(TOTAL_WIN),2) AS AVG_WIN,
+  floor(sum(total_match)/8) as total_match_per_season
+  FROM TEAM_WIN_LOSE TWL
+  GROUP BY TEAM
+  ORDER BY AVG_WIN DESC;
+  ```
+  <img width="300" alt="Untitled (29)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/35129e50-bd0a-4255-a04f-2b3933d3937b">
+
+  To make the data more clear, I also added the total match per season just to see the difference between the average win and total match. From the result, we can see that **FC Barcelona** has an average win of **29.25** from 38 matches in a season. Seemingly not much different from the leaders, **Real Madrid** recorded a total average of** 28.5** wins per season. That's a difference of at least 4 wins compared to the teams below them who average **20 to 24 wins per season**.
+
+- Total goals and wins correlation
+    
+    It's just a curiosity to see the relationship between the number of goals scored and the total wins.
+  <img width="960" alt="Untitled (30)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/b2618048-f2f9-4afc-b98f-42d78f75e5b4">
+
+  Based on the above diagram, there seems to be a positive correlation between the number of goals scored and the number of victories obtained.
+
+# Data Visualization
+
+I have created a summary of charts using Tableau Public to gain a deeper understanding of the data. You can view it by clicking on this [link](https://public.tableau.com/views/EuroFootball/DATAVISUALIZATION?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link).
+
+# Conlusion
+
+Based on the analysis conducted, it seems that two Spanish teams, FC Barcelona and Real Madrid, dominated in almost every aspect of the sport. Their remarkable record each season, particularly in terms of goals and total wins, outshone most other teams, with only a few, such as FC Bayern Munich, coming close to their numbers. Although the number of matches played and the level of opponent strength varied across different leagues, there is a clear correlation between the data analyzed and the achievements of Spanish teams in the European arena that season. FC Barcelona won 3 UCL titles, while Real Madrid won one, meaning that they won half of all UCL titles during that period.
+
+That's the result of analyzing the performance of each team from the top five leagues in Europe using SQL and Tableau Public. I'm sure there are still many shortcomings such as ineffective queries and inappropriate data presentation. But I will try to improve it in the future. Peace!
+
+  
 
 
 
