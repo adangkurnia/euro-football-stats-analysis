@@ -636,7 +636,7 @@ I would like to view more than just the number of goals a team has scored and co
 
 # Data Visualization
 
-I have created a summary of charts using Tableau Public to gain a deeper understanding of the data. You can view it by clicking on this [link](https://public.tableau.com/views/EuroFootball/DATAVISUALIZATION?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link).
+I have created a summary of charts using Tableau Public to gain a deeper understanding of the data. You can view it by clicking on this [link](https://public.tableau.com/views/EuroFootball/DATAVISUALIZATION?:language=en-US&:display_count=n&:origin=viz_share_link).
 
 # Conclusion
 
