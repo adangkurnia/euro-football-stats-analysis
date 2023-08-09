@@ -298,3 +298,229 @@ At first, I aim to assess each team's performance by analyzing their total goals
     <img width="600" alt="Untitled (4)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/254b127c-4d53-4512-b4c1-40bf452e934e">
 
 After creating a View table that displays total goals and conceded from the previous queries, I analyzed Team performances by breaking down the data.      
+
+- Summary table
+    
+    I will merge the two view tables into a summary table to make data analysis easier. Here is the query I have created:
+  ```SQL
+  CREATE VIEW SUMMARY_TABLE
+  AS
+  SELECT 
+  TG.SEASON,
+  TG.TEAM,
+  TG.COUNTRY,
+  TG.LEAGUE,
+  TG.TOTAL_HOME_GOAL,
+  TOTAL_AWAY_GOAL,
+  TG.TOTAL_GOALS,
+  TC.TOTAL_HOME_CONCEDED,
+  TC.TOTAL_AWAY_CONCEDED,
+  TC.TOTAL_GOALS_CONCEDED 
+  FROM TOTAL_TEAM_GOALS TG
+  JOIN TOTAL_TEAM_CONCEDED TC
+  ON TG.TEAM = TC.TEAM
+  AND TG.SEASON = TC.SEASON
+  JOIN NOT_RELEGATED_TEAMS NRT
+  ON TG.TEAM = NRT.TEAM
+  GROUP BY TG.SEASON, 
+  TG.TEAM, 
+  TG.COUNTRY, 
+  TG.LEAGUE, 
+  TG.TOTAL_HOME_GOAL,
+  TOTAL_AWAY_GOAL,
+  TG.TOTAL_GOALS,
+  TC.TOTAL_HOME_CONCEDED,
+  TC.TOTAL_AWAY_CONCEDED,
+  TC.TOTAL_GOALS_CONCEDED 
+  ORDER BY TG.SEASON, TG.TEAM;
+  
+  SELECT * FROM SUMMARY_TABLE;
+  ```
+  <img width="800" alt="Untitled (5)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/156c06e6-0ef7-41e9-9ec5-034efe53a1a1">
+
+After running the query, we now have the total number of goals scored and conceded during each home and away match throughout the season. Let's analyze each set of data individually to evaluate the performance of each team.
+
+- Teams with the most goals in the entire season (The most productive teams)
+    
+    The first finding will be to see the total goals scored by each team throughout the entire season. To see that, I created the following query:
+  ```SQL
+  SELECT TEAM, SUM(TOTAL_GOALS) AS ALL_SEASON_GOALS
+  FROM SUMMARY_TABLE 
+  GROUP BY TEAM
+  ORDER BY SUM(TOTAL_GOALS) DESC;
+  ```
+  <img width="400" alt="Untitled (6)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/a886bdce-9eec-4a6c-9781-416fd47a4bf5">
+
+  Based on the chart, it's evident that **FC Barcelona** was the highest-scoring team from 2008 to 2016, with a total of **849 goals**. This is five times more than the team in second place. The team in second place is also from Spain, **Real Madrid**, with **843 goals** scored in the same period. The remaining top 10 teams comprise four teams from England, two from Germany, and one each from France and Italy. It's worth noting that, except for FC Barcelona and Real Madrid, no other team managed to score 700 goals. This leaves a gap of over 100 goals between the Spanish teams and the others.
+
+- Teams with the most goals each season
+  ```SQL
+  SELECT SEASON, TEAM, COUNTRY, LEAGUE, TOTAL_GOALS
+  FROM SUMMARY_TABLE 
+  ORDER BY TOTAL_GOALS DESC;
+  ```
+  the result of the query will be visualized like this:
+  
+  <img width="400" alt="Untitled (7)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/4103d5e0-fcf6-459f-a862-0671657f3528">
+  
+  <img width="960" alt="Untitled (8)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/0fdc74c0-f1c6-4e7e-b814-6f9f52cbe65a">
+
+  From the chart, we can see that in 8 seasons **FC Barcelona** can score goals more than 90 goals per season. The highest number of goals that they ever scored for a season was in the **2012/2013** season with **115 goals**. This season also took part in Lionel Messi putting up an astonishing **91** goals, shattering the old record of 85 that was held by Gerd Muller (Bayern Munich, Germany - 1972). Over a total of 69 games, Messi scored 79 for Barcelona and another 12 for his home country of Argentina.
+  Back to the context, the same thing also did by Real Madrid to score 100+ goals in each season except in 2008/2009 when we knew **Cristiano Ronaldo** hadn’t come yet to Santiago Bernabeu. To see the data more clearly, let's take a look at the following visualization:
+
+  <img width="959" alt="Untitled (9)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/732281e2-80ec-4d2e-83fd-743162faf417">
+
+  The peak performance of the **Real Madrid** team and also as the **#1 team** with the most goals scored in a single season was in **2011/2012** producing **121 goals**. **The rest of the teams** were scoring goals in the majority **less than 90 goals**.
+
+- Goals scored trendline each season
+    
+    To see how the trendline of each team's goal-scoring from 2008/2009 to 2015/2016, I created a line chart for the top 5 teams with the most goals scored. the line chart will look like this:
+    
+    <img width="960" alt="Untitled (10)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/8b0c7aaa-9064-4a30-9132-09cc1f346d65">
+
+    From the chart we can see that, the **top 2 teams** have **up and down performances** during each season but they still can keep the performance at a high level. that case also applied to **FC Bayer Munich** and **Manchester City** which can still consistently score goals around **70 to 90**. Meanwhile, Chelsea only had peak performance in terms of scoring goals in the **2009/2010 season** which scored **103 goals**, after that they just dropped the number of goals **below 75 goals** and keep dropping for the **2015/2016 season**. **The lowest number of goals** scored by the top 5 teams is **Manchester City 2008/2009 ** with** 58 goals **only.
+
+- Average goals produced by each team
+    
+    After looking at the number of goals created, let's take a look at how many goals on average can every team score in a season. I used this query:
+  ```SQL
+  SELECT 
+  TEAM,
+  COUNTRY,
+  LEAGUE,
+  ROUND(AVG(TOTAL_GOALS),1) AS AVERAGE_GOALS
+  FROM SUMMARY_TABLE
+  GROUP BY TEAM, COUNTRY, LEAGUE
+  ORDER BY AVERAGE_GOALS DESC;
+  ```
+  <img width="400" alt="Untitled (11)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/e038ee9d-eeb6-4748-8589-b2be72486e5a">
+
+  From the chart, we can see that both **FC Barcelona** and **Real Madrid** have an average of goals per season of **more than 100**. Meanwhile, **the rest of the top 10 teams didn’t reach 85 goals** and most of them only scored around 60s to 70s goals per season.
+
+- Teams with the most home goals each season
+    
+    Go a little further, I want to see which teams scored the most goals while playing as the home team. To do that, I used this query:
+  ```SQL
+  SELECT 
+  SEASON,
+  TEAM,
+  COUNTRY,
+  LEAGUE,
+  TOTAL_HOME_GOAL
+  FROM SUMMARY_TABLE 
+  ORDER BY TOTAL_HOME_GOAL DESC;
+  ```
+  <img width="400" alt="Untitled (12)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/f4b90e67-8382-4726-a59e-becbb1de0d47">
+
+  <img width="960" alt="Untitled (13)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/ca8e08fe-ce1d-4689-92a1-1fd4562c5554">
+
+  <img width="960" alt="Untitled (14)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/5be9df6d-dad8-449c-8bdf-6e5e5a0a2931">
+
+  The team that scored the most goal when playing on the home ground was **FC Barcelona** in the season **2011/2012 with 73 goals**. Not far from that, the rival also almost reached the same number as FC Barcelona achieved, **Real Madrid scored 70 goals** in a single season **twice in 2011/2012 and 2015/2016**. The rest of the total home goals scored not reaching 70 goals afterwards.
+
+- Teams with the most away goals each season
+    
+    the same thing also I did see the goals scored by the teams while playing as visitors. To do that, I used this query:
+  ```SQL
+  SELECT 
+  SEASON,
+  TEAM,
+  COUNTRY,
+  LEAGUE,
+  TOTAL_AWAY_GOAL
+  FROM SUMMARY_TABLE 
+  ORDER BY TOTAL_AWAY_GOAL DESC;
+  ```
+  <img width="426" alt="Untitled (15)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/c86dc072-a775-4ecd-b525-cc5a7b2b75b0">
+
+  To understand the data clearly, I then create some visualizations like these:
+
+  <img width="960" alt="Untitled (16)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/da47a6ed-40ad-4fe9-a444-74035523b071">
+  <img width="960" alt="Untitled (17)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/8cd39fc7-f50a-4192-86d7-7f9770c24ac5">
+
+  The most away goals scored was done by **Real Madrid with 53 goals in the season 2014/2015**. They also ever scored almost the same as the first one in the **season 2011/2012 with 51 goals**. The only team that can reach more than 50 away goals in a single season was **FC Barcelona** with **52 goals** in the season** 2012/2013**.
+
+- Goal distributions (%) from the top 10 teams by total goals
+    
+    I also want to take a look at the goal distribution percentage between the home and away sides. The chart will look like this:
+  <img width="960" alt="Untitled (18)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/a3482cb9-20a4-4150-b967-911ccfc7f5a3">
+
+  From the top 10 teams, we can see that more than **50%** of the total goals were scored by the home side with **Manchester City** coming on top 1 as they scored **60.23%** of total goals.  Meanwhile, the team with the most goals scored when played as a **visitor** was **Arsenal **which can score** 46.60%** of total goals. It's important to mention that the information presented is focused on the top 10 teams with the highest number of goals scored. Specifically, we're looking for the team that scored the most goals overall, both when playing at home and away.
+
+- Teams with the least conceded goals in the entire season (Teams with the best defense)
+    
+    The next part will be about the record of goals conceded by each team. I want to take a look at the teams with the best defense from the goals they have conceded. To do that, I used this query:
+  ```SQL
+  SELECT 
+  TEAM,
+  COUNTRY,
+  LEAGUE,
+  SUM(TOTAL_GOALS_CONCEDED) AS ALL_SEASON_CONCEDED
+  FROM SUMMARY_TABLE
+  GROUP BY TEAM, COUNTRY, LEAGUE
+  ORDER BY ALL_SEASON_CONCEDED;
+  ```
+  <img width="400" alt="Untitled (19)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/f58666bb-0168-464b-a012-82458a25ea72">
+
+  <img width="960" alt="Untitled (20)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/abb563c2-1d58-46ab-bd07-36946fb65dcc">
+
+  Based on the chart, it appears that **FC Bayern Munich** had the strongest defense among the teams. Over the course of 8 seasons, they only conceded a total of **211 goals**, resulting in an average of **26.38% goals per season**. In the second place, **FC Barcelona**, the team with the highest number of goals scored, also performed well by only conceding **232 goals** in 8 years. Afterward, some teams struggled to defend and ended up conceding an average of over 30 goals per season.
+
+- Teams with the least conceded goals each season
+    
+    To gather more information about the conceded data, I will utilize a query that displays the number of goals conceded by each team per season. Below is the query that I have formulated:
+  ```SQL
+  SELECT 
+  SEASON,
+  TEAM,
+  COUNTRY,
+  LEAGUE,
+  TOTAL_HOME_CONCEDED,
+  TOTAL_AWAY_CONCEDED, 
+  TOTAL_GOALS_CONCEDED
+  FROM SUMMARY_TABLE
+  ORDER BY TOTAL_GOALS_CONCEDED;
+  ```
+  <img width="711" alt="Untitled (21)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/99bb0b2b-034e-454f-9e0b-d698e77c17ac">
+
+  <img width="960" alt="Untitled (22)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/031d2a9f-6f2b-42ec-9d43-9479868c79e6">
+
+  From the chart, we can see that **FC Bayern Munich** become the team with the fewest goals conceded in a single season. In the season **2015/2016**, they only conceded **17 goals**. They also did almost the same thing in **2012/2013 and 2014/2015** with only conceded **18 goals**. There are several teams that also only conceded goals less than 20 which are PSG 2015/2016, Juventus 2011/2012, and Atletico Madrid 2015/2016.
+
+- Teams with the most goal difference each season
+    
+    In the last part of team performances by goals, I want to see the teams with the most goal difference. To do that, I used this query:
+  ```SQL
+  SELECT 
+  SEASON,
+  TEAM,
+  COUNTRY,
+  LEAGUE,
+  TOTAL_GOALS-TOTAL_GOALS_CONCEDED AS GOAL_DIFF
+  FROM SUMMARY_TABLE
+  ORDER BY TOTAL_GOALS-TOTAL_GOALS_CONCEDED DESC;
+  ```
+  <img width="400" alt="Untitled (23)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/8bbe6c52-17f4-488f-a90c-64679efb496f">
+
+  <img width="960" alt="Untitled (24)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/800b4940-f2b3-432d-a925-32d0a63f0670">
+
+  From the chart, we can see both **FC Barcelona and Real Madrid** have ever booked the highest goal difference with an **89** gap. **Real Madrid ** accomplished it first In the **2011/2012** season, while **FC Barcelona** followed suit three years later.
+
+**Summary team performances by total wins and losses**
+
+I would like to view more than just the number of goals a team has scored and conceded. It would be helpful to also see their total number of wins and losses, their average number of wins, and their win rate.
+
+
+
+
+
+
+
+  
+
+
+
+  
+  
+
+
