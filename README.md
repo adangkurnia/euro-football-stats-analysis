@@ -15,7 +15,7 @@ This project aims to showcase the performance of teams in Europe's top 5 leagues
 8.	[Conclusion](https://github.com/adangkurnia/euro-football-stats-analysis#conclusion)
 
 # Dataset
-I got the dataset from Kaggle, you can download it on this [link](https://www.kaggle.com/code/dimarudov/data-analysis-using-sql/input).
+I got the dataset from Kaggle, you can download it on this [link](https://www.kaggle.com/code/dimarudov/data-analysis-using-sql/input). You can also download all SQL queries syntax for this project on this [SQL Query](https://github.com/adangkurnia/euro-football-stats-analysis/blob/main/eurofootballScript.sql)
 
 # Data Understanding
 There are 7 tables inside the database. Those tables are **Match, Country, League, Team, Team Attributes, Player, Player Attributes**. The total rows and columns of each table can be seen in this picture:
