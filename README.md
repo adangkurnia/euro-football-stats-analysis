@@ -18,12 +18,12 @@ I got the dataset from Kaggle, you can download it on this [link](https://www.ka
 # Data Understanding
 There are 7 tables inside the database. Those tables are **Match, Country, League, Team, Team Attributes, Player, Player Attributes**. The total rows and columns of each table can be seen in this picture:
 
-<img width="400" alt="Untitled" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/600c1fb4-6193-4244-b986-f95494a044b2">
+<img width="400"  alt="Untitled" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/36f2ce8c-ba14-4af4-b9c3-844c5ffae289">
+
+All tables have a relationship so they can be joined by each other. The **Entity Relationship Diagram** looks like this:
+<img width="550"  alt="ERD (1)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/83c52490-02c5-4452-af7c-568c3f38aed7">
 
 
-All tables have a relationship so they can be joined by each other. The ERD looks like this:
-
- <img width="400" alt="image" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/9fca5ac4-4f47-45ff-ae89-b44fa774b352">
 
 # Constraints
 
@@ -133,8 +133,7 @@ In general, my analysis will consist of three main components: identifying the t
   FROM TEAMS_BY_COUNTRY
   GROUP BY COUNTRY;
   ```
-  
-  <img width="400" alt="Untitled (1)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/f7e1ce50-df17-4fa1-a980-72e31a7aac97">
+  <img width="400" alt="Untitled (1)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/b2db5135-62bf-45df-aa3d-1880761b26c3">
 
   We can see from the result that there are 20 team participants in all countries except Germany that only has 18 teams.
 
@@ -162,8 +161,7 @@ In general, my analysis will consist of three main components: identifying the t
   SELECT *
   FROM NOT_RELEGATED_TEAMS;
   ```
-
-  <img width="400" alt="image" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/9aca8946-ddab-4539-8cdd-856971c6cc4f">
+  <img width="400" alt="image" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/a7fb34cd-cec1-4d04-bd67-61f665e3d815">
 
   We can see from the result there are 50 teams from all the leagues that never relegated from 2008 to 2016.
 
@@ -179,8 +177,7 @@ In general, my analysis will consist of three main components: identifying the t
   GROUP BY C.NAME
   ORDER BY COUNT(*) DESC;
   ```
-
-  <img width="400" alt="Untitled (2)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/53b6e8d7-6c67-40aa-9c7c-787901703a6c">
+  <img width="400" alt="Untitled (2)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/d01377c4-6b7c-4c32-b227-5e77403d9075">
   
   We can see that from the total of 50 teams, there are variations of how many teams can survive in the highest caste of their respective leagues. The country that has the most teams surviving is Germany with 11 teams, followed by England, France, and Italy with 10 teams. Meanwhile, Spain is the country with the least number of teams that have never been relegated with a total of 9 teams.
 
@@ -238,7 +235,7 @@ At first, I aim to assess each team's performance by analyzing their total goals
    
    SELECT * FROM TOTAL_TEAM_GOALS;
    ```
-   <img width="550" alt="Untitled (3)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/ffc21fd9-2a56-4a05-9d1f-b914e2b9df9e">
+   <img width="550" alt="Untitled (3)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/e3b65176-289d-46d9-bb84-e27e1f7d86a6">
 
 - Create a view of the total goals conceded by each team
     
@@ -294,7 +291,7 @@ At first, I aim to assess each team's performance by analyzing their total goals
     
     SELECT * FROM TOTAL_TEAM_CONCEDED;
     ```
-    <img width="600" alt="Untitled (4)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/254b127c-4d53-4512-b4c1-40bf452e934e">
+    <img width="600" alt="Untitled (4)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/aac25ff1-ad83-49fa-9a43-178012c83a49">
 
 After creating a View table that displays total goals and conceded from the previous queries, I analyzed Team performances by breaking down the data.      
 
@@ -335,7 +332,7 @@ After creating a View table that displays total goals and conceded from the prev
   
   SELECT * FROM SUMMARY_TABLE;
   ```
-  <img width="800" alt="Untitled (5)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/156c06e6-0ef7-41e9-9ec5-034efe53a1a1">
+  <img width="800" alt="Untitled (5)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/de868a82-6633-46f6-84ac-562757a81db1">
 
 After running the query, we now have the total number of goals scored and conceded during each home and away match throughout the season. Let's analyze each set of data individually to evaluate the performance of each team.
 
@@ -348,9 +345,9 @@ After running the query, we now have the total number of goals scored and conced
   GROUP BY TEAM
   ORDER BY SUM(TOTAL_GOALS) DESC;
   ```
-  <img width="400" alt="Untitled (6)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/a886bdce-9eec-4a6c-9781-416fd47a4bf5">
+  <img width="400" alt="Untitled (6)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/7063254d-6f05-4858-b959-3ac4526c3387">
 
-  Based on the chart, it's evident that **FC Barcelona** was the highest-scoring team from 2008 to 2016, with a total of **849 goals**. This is five times more than the team in second place. The team in second place is also from Spain, **Real Madrid**, with **843 goals** scored in the same period. The remaining top 10 teams comprise four teams from England, two from Germany, and one each from France and Italy. It's worth noting that, except for FC Barcelona and Real Madrid, no other team managed to score 700 goals. This leaves a gap of over 100 goals between the Spanish teams and the others.
+  Based on the query result, it's evident that **FC Barcelona** was the highest-scoring team from 2008 to 2016, with a total of **849 goals**. This is five times more than the team in second place. The team in second place is also from Spain, **Real Madrid**, with **843 goals** scored in the same period. The remaining top 10 teams comprise four teams from England, two from Germany, and one each from France and Italy. It's worth noting that, except for FC Barcelona and Real Madrid, no other team managed to score 700 goals. This leaves a gap of over 100 goals between the Spanish teams and the others.
 
 - Teams with the most goals each season
   ```SQL
@@ -360,22 +357,22 @@ After running the query, we now have the total number of goals scored and conced
   ```
   the result of the query will be visualized like this:
   
-  <img width="400" alt="Untitled (7)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/4103d5e0-fcf6-459f-a862-0671657f3528">
+  <img width="400" alt="Untitled (7)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/55df0c58-0441-4c33-a2d8-fdcf938f4c96">
   
-  <img width="960" alt="Untitled (8)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/0fdc74c0-f1c6-4e7e-b814-6f9f52cbe65a">
+  <img width="960" alt="Untitled (8)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/3b41d587-9957-471f-b4cc-0705e508fef5">
 
   From the chart, we can see that in 8 seasons **FC Barcelona** can score goals more than 90 goals per season. The highest number of goals that they ever scored for a season was in the **2012/2013** season with **115 goals**. This season also took part in Lionel Messi putting up an astonishing **91** goals, shattering the old record of 85 that was held by Gerd Muller (Bayern Munich, Germany - 1972). Over a total of 69 games, Messi scored 79 for Barcelona and another 12 for his home country of Argentina.
   Back to the context, the same thing also did by Real Madrid to score 100+ goals in each season except in 2008/2009 when we knew **Cristiano Ronaldo** hadn’t come yet to Santiago Bernabeu. To see the data more clearly, let's take a look at the following visualization:
 
-  <img width="959" alt="Untitled (9)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/732281e2-80ec-4d2e-83fd-743162faf417">
+  <img width="959" alt="Untitled (9)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/c666ffc1-8a72-4786-acb0-dc75473a34fb">
 
   The peak performance of the **Real Madrid** team and also as the **#1 team** with the most goals scored in a single season was in **2011/2012** producing **121 goals**. **The rest of the teams** were scoring goals in the majority **less than 90 goals**.
 
 - Goals scored trendline each season
     
     To see how the trendline of each team's goal-scoring from 2008/2009 to 2015/2016, I created a line chart for the top 5 teams with the most goals scored. the line chart will look like this:
-    
-    <img width="960" alt="Untitled (10)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/8b0c7aaa-9064-4a30-9132-09cc1f346d65">
+
+  <img width="960" alt="Untitled (10)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/30b02c2f-47ac-4a3f-8320-94180453137d">
 
     From the chart we can see that, the **top 2 teams** have **up and down performances** during each season but they still can keep the performance at a high level. that case also applied to **FC Bayer Munich** and **Manchester City** which can still consistently score goals around **70 to 90**. Meanwhile, Chelsea only had peak performance in terms of scoring goals in the **2009/2010 season** which scored **103 goals**, after that they just dropped the number of goals **below 75 goals** and keep dropping for the **2015/2016 season**. **The lowest number of goals** scored by the top 5 teams is **Manchester City 2008/2009** with **58 goals** only.
 
@@ -392,7 +389,7 @@ After running the query, we now have the total number of goals scored and conced
   GROUP BY TEAM, COUNTRY, LEAGUE
   ORDER BY AVERAGE_GOALS DESC;
   ```
-  <img width="400" alt="Untitled (11)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/e038ee9d-eeb6-4748-8589-b2be72486e5a">
+  <img width="400" alt="Untitled (11)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/e315509d-209a-450c-b34d-3ac0deb39593">
 
   From the chart, we can see that both **FC Barcelona** and **Real Madrid** have an average of goals per season of **more than 100**. Meanwhile, **the rest of the top 10 teams didn’t reach 85 goals** and most of them only scored around 60s to 70s goals per season.
 
@@ -409,11 +406,11 @@ After running the query, we now have the total number of goals scored and conced
   FROM SUMMARY_TABLE 
   ORDER BY TOTAL_HOME_GOAL DESC;
   ```
-  <img width="400" alt="Untitled (12)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/f4b90e67-8382-4726-a59e-becbb1de0d47">
-
-  <img width="960" alt="Untitled (13)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/ca8e08fe-ce1d-4689-92a1-1fd4562c5554">
-
-  <img width="960" alt="Untitled (14)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/5be9df6d-dad8-449c-8bdf-6e5e5a0a2931">
+  <img width="400" alt="Untitled (12)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/2351f030-6e36-4d57-92b4-948f75bffbfa">
+  
+  <img width="960" alt="Untitled (13)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/fb2a1a10-4ad7-4d8c-ba10-226bd048f4f8">
+  
+  <img width="960" alt="Untitled (14)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/8287e59c-4688-428d-8bce-1c4e8efb53b0">
 
   The team that scored the most goal when playing on the home ground was **FC Barcelona** in the season **2011/2012 with 73 goals**. Not far from that, the rival also almost reached the same number as FC Barcelona achieved, **Real Madrid scored 70 goals** in a single season **twice in 2011/2012 and 2015/2016**. The rest of the total home goals scored not reaching 70 goals afterwards.
 
@@ -430,19 +427,19 @@ After running the query, we now have the total number of goals scored and conced
   FROM SUMMARY_TABLE 
   ORDER BY TOTAL_AWAY_GOAL DESC;
   ```
-  <img width="426" alt="Untitled (15)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/c86dc072-a775-4ecd-b525-cc5a7b2b75b0">
+  <img width="426" alt="Untitled (15)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/e80e6c34-4748-4343-8a77-434a92fe06d2">
 
-  To understand the data clearly, I then create some visualizations like these:
+  <img width="960" alt="Untitled (16)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/991b1462-e57a-4332-8dbe-58211722509a">
 
-  <img width="960" alt="Untitled (16)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/da47a6ed-40ad-4fe9-a444-74035523b071">
-  <img width="960" alt="Untitled (17)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/8cd39fc7-f50a-4192-86d7-7f9770c24ac5">
+  <img width="960" alt="Untitled (17)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/7db6b289-4434-44f0-a1a4-636160ec42c3">
 
   The most away goals scored was done by **Real Madrid with 53 goals in the season 2014/2015**. They also ever scored almost the same as the first one in the **season 2011/2012 with 51 goals**. The only team that can reach more than 50 away goals in a single season was **FC Barcelona** with **52 goals** in the season **2012/2013**.
 
 - Goal distributions (%) from the top 10 teams by total goals
     
     I also want to take a look at the goal distribution percentage between the home and away sides. The chart will look like this:
-  <img width="960" alt="Untitled (18)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/a3482cb9-20a4-4150-b967-911ccfc7f5a3">
+
+  <img width="960" alt="Untitled (18)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/6b920ab2-1468-4807-9f59-9370c8ad0106">
 
   From the top 10 teams, we can see that more than **50%** of the total goals were scored by the home side with **Manchester City** coming on top 1 as they scored **60.23%** of total goals.  Meanwhile, the team with the most goals scored when played as a **visitor** was **Arsenal **which can score** 46.60%** of total goals. It's important to mention that the information presented is focused on the top 10 teams with the highest number of goals scored. Specifically, we're looking for the team that scored the most goals overall, both when playing at home and away.
 
@@ -459,9 +456,9 @@ After running the query, we now have the total number of goals scored and conced
   GROUP BY TEAM, COUNTRY, LEAGUE
   ORDER BY ALL_SEASON_CONCEDED;
   ```
-  <img width="400" alt="Untitled (19)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/f58666bb-0168-464b-a012-82458a25ea72">
+  <img width="400" alt="Untitled (19)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/2169f69a-9a54-49c8-a385-6798169ec76c">
 
-  <img width="960" alt="Untitled (20)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/abb563c2-1d58-46ab-bd07-36946fb65dcc">
+  <img width="960" alt="Untitled (20)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/b7e7b6e6-70c7-40ff-b81c-752a98288d63">
 
   Based on the chart, it appears that **FC Bayern Munich** had the strongest defense among the teams. Over the course of 8 seasons, they only conceded a total of **211 goals**, resulting in an average of **26.38% goals per season**. In the second place, **FC Barcelona**, the team with the highest number of goals scored, also performed well by only conceding **232 goals** in 8 years. Afterward, some teams struggled to defend and ended up conceding an average of over 30 goals per season.
 
@@ -480,9 +477,9 @@ After running the query, we now have the total number of goals scored and conced
   FROM SUMMARY_TABLE
   ORDER BY TOTAL_GOALS_CONCEDED;
   ```
-  <img width="711" alt="Untitled (21)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/99bb0b2b-034e-454f-9e0b-d698e77c17ac">
+  <img width="711" alt="Untitled (21)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/400d0c0d-8541-44b4-a327-8c7ad3373e91">
 
-  <img width="960" alt="Untitled (22)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/031d2a9f-6f2b-42ec-9d43-9479868c79e6">
+  <img width="960" alt="Untitled (22)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/3c1e4377-10eb-4fb4-9a05-89a7a1d6686c">
 
   From the chart, we can see that **FC Bayern Munich** become the team with the fewest goals conceded in a single season. In the season **2015/2016**, they only conceded **17 goals**. They also did almost the same thing in **2012/2013 and 2014/2015** with only conceded **18 goals**. There are several teams that also only conceded goals less than 20 which are PSG 2015/2016, Juventus 2011/2012, and Atletico Madrid 2015/2016.
 
@@ -499,9 +496,9 @@ After running the query, we now have the total number of goals scored and conced
   FROM SUMMARY_TABLE
   ORDER BY TOTAL_GOALS-TOTAL_GOALS_CONCEDED DESC;
   ```
-  <img width="400" alt="Untitled (23)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/8bbe6c52-17f4-488f-a90c-64679efb496f">
+  <img width="400" alt="Untitled (23)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/295c7e29-8c39-462a-a69c-bae06acd30ab">
 
-  <img width="960" alt="Untitled (24)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/800b4940-f2b3-432d-a925-32d0a63f0670">
+  <img width="960" alt="Untitled (24)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/c8440d29-99d7-491d-a696-07db5a340510">
 
   From the chart, we can see both **FC Barcelona and Real Madrid** have ever booked the highest goal difference with an **89** gap. **Real Madrid** accomplished it first In the **2011/2012** season, while **FC Barcelona** followed suit three years later.
 
@@ -561,7 +558,7 @@ I would like to view more than just the number of goals a team has scored and co
   
   SELECT * FROM TEAM_WIN_LOSE ;
   ```
-  <img width="550" alt="Untitled (25)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/defc0e42-4ee1-4699-8644-e8a4e736e3da">
+  <img width="550" alt="Untitled (25)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/95f63aaf-a802-407a-b818-07f3a4641e03">
 
 - The team with the most wins in all season
     
@@ -576,7 +573,7 @@ I would like to view more than just the number of goals a team has scored and co
   GROUP BY TEAM, COUNTRY, LEAGUE
   ORDER BY TOTAL_WIN DESC;
   ```
-  <img width="400" alt="Untitled (26)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/42bc90b8-bbdb-458e-a4bd-ec014a06fd23">
+  <img width="400" alt="Untitled (26)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/b2cd5ba9-8988-42a7-b6d7-f088fe97d4a7">
 
   From the result, we can see that **FC Barcelona** ranks number 1 in the most wins in the entire season with **234 wins**. The second also comes from the same country which is **Real Madrid** with **228 wins**. The rest of the teams were not even reaching 200 wins with **FC Bayern Munich** from Germany being the closest one with **193 wins**.
 
@@ -593,7 +590,7 @@ I would like to view more than just the number of goals a team has scored and co
   GROUP BY TEAM, COUNTRY, LEAGUE
   ORDER BY TOTAL_LOSE;
   ```
-  <img width="400" alt="Untitled (27)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/c6f25a12-42e2-4127-bc5d-aad474c61551">
+  <img width="400" alt="Untitled (27)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/e439d9b3-cdd4-4bb8-bae7-05b31718ed48">
 
   From the result, we can see that the teams in the top five rankings for this are also the same teams that are in the teams with the most wins just discussed. They are **FC Barcelona** with only **70 defeats**, **Real Madrid** with **76 defeats**, and **FC Bayern Munich** with **79 defeats**. They are only three teams that got lost less than 100 times, other than team, all the teams had more than 110 times lost.
 
@@ -607,7 +604,7 @@ I would like to view more than just the number of goals a team has scored and co
   GROUP BY TEAM
   ORDER BY WINRATE DESC;
   ```
-  <img width="200" alt="Untitled (28)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/da044b3e-de43-49f7-b893-9d69f6c1ef83">
+  <img width="200" alt="Untitled (28)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/e7f2ad58-d513-4134-9605-aea8419fdf81">
 
   From the query, as we have known the list of the team with the most wins. The **top 3 teams** have a winning percentage **above 70%**. meanwhile, **the rest** of them only have a win rate of **less than 63%**.
 
@@ -622,14 +619,15 @@ I would like to view more than just the number of goals a team has scored and co
   GROUP BY TEAM
   ORDER BY AVG_WIN DESC;
   ```
-  <img width="300" alt="Untitled (29)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/35129e50-bd0a-4255-a04f-2b3933d3937b">
+  <img width="300" alt="Untitled (29)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/0ebeccbb-57a5-403c-9dd3-3cdca5b39b17">
 
   To make the data more clear, I also added the total match per season just to see the difference between the average win and total match. From the result, we can see that **FC Barcelona** has an average win of **29.25** from 38 matches in a season. Seemingly not much different from the leaders, **Real Madrid** recorded a total average of** 28.5** wins per season. That's a difference of at least 4 wins compared to the teams below them who average **20 to 24 wins per season**.
 
 - Total goals and wins correlation
     
     It's just a curiosity to see the relationship between the number of goals scored and the total wins.
-  <img width="960" alt="Untitled (30)" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/b2618048-f2f9-4afc-b98f-42d78f75e5b4">
+  
+  <img width="960" alt="Untitled (30)" src="https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/f0605941-a090-4ce6-8da6-426d30bcffa4">
 
   Based on the above diagram, there seems to be a positive correlation between the number of goals scored and the number of victories obtained.
 
