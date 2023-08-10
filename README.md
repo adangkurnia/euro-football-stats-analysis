@@ -1,5 +1,7 @@
 # Introduction
 
+![euro football stats](https://github.com/adangkurnia/euro-football-stats-analysis/assets/65482851/7beab9af-8961-4291-9d4a-4e4b2c055a70)
+
 This project aims to showcase the performance of teams in Europe's top 5 leagues from the 2008/2009 to 2015/2016 seasons. The analysis is based on various football metrics, including goals productivity, defense strength, number of wins and losses, and other important numbers. In addition to utilizing SQL queries, I will also be presenting the data in a visual format using Tableau Public.
 
 # Content
