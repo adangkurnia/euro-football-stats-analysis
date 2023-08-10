@@ -3,20 +3,19 @@
 This project aims to showcase the performance of teams in Europe's top 5 leagues from the 2008/2009 to 2015/2016 seasons. The analysis is based on various football metrics, including goals productivity, defense strength, number of wins and losses, and other important numbers. In addition to utilizing SQL queries, I will also be presenting the data in a visual format using Tableau Public.
 
 # Content
-1.	Dataset
-2.	Data Understanding
-3.	Constraint
-4.	Tools
-5.	Data Cleaning
-6.	Exploratory Data Analysis
-7.	Data Visualization
-8.	Conclusion
+1.	[Dataset](https://github.com/adangkurnia/euro-football-stats-analysis#dataset)
+2.	[Data Understanding](https://github.com/adangkurnia/euro-football-stats-analysis#data-understanding)
+3.	[Constraints](https://github.com/adangkurnia/euro-football-stats-analysis#constraints)
+4.	[Tools](https://github.com/adangkurnia/euro-football-stats-analysis#tools)
+5.	[Data Cleaning](https://github.com/adangkurnia/euro-football-stats-analysis#data-cleaning)
+6.	[Exploratory Data Analysis](https://github.com/adangkurnia/euro-football-stats-analysis#exploratory-data-analysis)
+7.	[Data Visualization](https://github.com/adangkurnia/euro-football-stats-analysis#data-visualization)
+8.	[Conclusion](https://github.com/adangkurnia/euro-football-stats-analysis#conclusion)
 
 # Dataset
 I got the dataset from Kaggle, you can download it on this [link](https://www.kaggle.com/code/dimarudov/data-analysis-using-sql/input).
 
 # Data Understanding
-
 There are 7 tables inside the database. Those tables are **Match, Country, League, Team, Team Attributes, Player, Player Attributes**. The total rows and columns of each table can be seen in this picture:
 
 <img width="400" alt="Untitled" src="https://github.com/adangkurnia/euro-football-analysis/assets/65482851/600c1fb4-6193-4244-b986-f95494a044b2">
@@ -640,7 +639,7 @@ I have created a summary of charts using Tableau Public to gain a deeper underst
 
 # Conclusion
 
-Based on the analysis conducted, it seems that two Spanish teams, FC Barcelona and Real Madrid, dominated in almost every aspect of the sport. Their remarkable record each season, particularly in terms of goals and total wins, outshone most other teams, with only a few, such as FC Bayern Munich, coming close to their numbers. Although the number of matches played and the level of opponent strength varied across different leagues, there is a clear correlation between the data analyzed and the achievements of Spanish teams in the European arena that season. FC Barcelona won 3 UCL titles, while Real Madrid won one, meaning that they won half of all UCL titles during that period.
+Based on the analysis conducted, it seems that two Spanish teams, FC Barcelona and Real Madrid, dominated in almost every aspect of the sport. Their remarkable record each season, particularly in terms of goals and total wins, outshone most other teams, with only a few, such as FC Bayern Munich, coming close to their numbers. Although the number of matches played and the level of opponent strength varied across different leagues, there is a clear correlation between the data analyzed and the achievements of Spanish teams in the European arena that season. FC Barcelona won three UCL titles, while Real Madrid won two, meaning that they won more than half of all UCL titles during that period.
 
 That's the result of analyzing the performance of each team from the top five leagues in Europe using SQL and Tableau Public. I'm sure there are still many shortcomings such as ineffective queries and inappropriate data presentation. But I will try to improve it in the future. Peace!
 
